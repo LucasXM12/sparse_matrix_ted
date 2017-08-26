@@ -66,6 +66,8 @@ public:
 
 	bool existsKey(const int&) const;
 
+	int rootHeight();
+
 	void delMinKey();
 	void delMaxKey();
 
@@ -156,6 +158,11 @@ bool Tree<dataType>::existsKey(const int& key) const {
 		return false;
 
 	return existsKey(key, this->root);
+}
+
+template<class dataType>
+int Tree<dataType>::rootHeight() {
+	return height(this->root);
 }
 
 template<class dataType>

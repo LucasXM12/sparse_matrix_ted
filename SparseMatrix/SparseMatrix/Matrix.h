@@ -20,6 +20,11 @@ private:
 		virtual ~Row();
 
 		int& operator[](const int&);
+
+		int rootHeight();
+		void delWithKey(const int&);
+		int& getWithKey(const int&);
+		void setWithKey(const int&, const int&);
 	};
 
 	Tree<Row> matrix;
