@@ -2,6 +2,8 @@
 
 #include "Matrix.h"
 
+//Row: ----------------------------------------------------------------------------------
+
 Matrix::Row::Row(Matrix*& father) : father(father), columns() {}
 
 Matrix::Row::~Row() {
@@ -9,6 +11,9 @@ Matrix::Row::~Row() {
 }
 
 int& Matrix::Row::operator[](const int& column) {
+	if (column < 0 || column >= this->father->width)
+		throw exception("Invalid column");
+
 	this->father->lastOperation.column = column;
 
 	return this->father->lastOperation.value;
@@ -30,9 +35,14 @@ void Matrix::Row::setWithKey(const int& key, const int& value) {
 	this->columns.setWithKey(key, value);
 }
 
-Matrix::Matrix(const int& width, const int& height, const int& defaultValue) : width(width),
-defaultValue(defaultValue) {
-	this->height = height;
+//Matrix: -------------------------------------------------------------------------------
+
+Matrix::Matrix(const int& width, const int& height, const int& defaultValue) : defaultValue(defaultValue) {
+	if (width <= 0)
+		throw exception("Invalid width");
+
+	if (height <= 0)
+		throw exception("Invalid height");
 
 	this->lastOperation.row = -1;
 	this->lastOperation.column = -1;
@@ -60,6 +70,9 @@ Matrix::Row& Matrix::operator[](const int& row) {
 		} else
 			this->matrix[lastRow].setWithKey(lastColumn, lastValue);
 	}
+
+	if (row < 0 || row >= this->height)
+		throw exception("Invalid row");
 
 	this->lastOperation.row = row;
 
