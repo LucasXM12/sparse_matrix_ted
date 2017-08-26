@@ -38,14 +38,14 @@ private:
 	node*& minKey(node*&) const;
 	node*& maxKey(node*&) const;
 
-	bool existsKey(const int&, const node*&) const;
+	bool existsKey(const int&, node* const&) const;
 
 	node*& leftRotate(node*&);
 	node*& rightRotate(node*&);
 
 	node*& newNode(const int&, const dataType&) const;
 
-	node*& addNode(node*&, const int&, const dataType&);
+	node*& addNode(node*&, const int&, dataType&);
 	node* delWithKey(node*&, const int&);
 	dataType& getWithKey(node*&, const int&);
 	void setWithKey(node*&, const int&, const dataType&);
@@ -56,7 +56,7 @@ public:
 
 	string toString() const;
 
-	void addNode(const int&, const dataType&);
+	void addNode(const int&, dataType&);
 	void delWithKey(const int&);
 	dataType& getWithKey(const int&);
 	void setWithKey(const int&, const dataType&);
@@ -166,7 +166,7 @@ int Tree<dataType>::rootHeight() {
 }
 
 template<class dataType>
-bool Tree<dataType>::existsKey(const int& key, const node*& root) const {
+bool Tree<dataType>::existsKey(const int& key, node* const& root) const {
 	if (key == root->key)
 		return true;
 	else if (key < root->key)
@@ -221,12 +221,12 @@ typename Tree<dataType>::node*& Tree<dataType>::newNode(const int& key, const da
 }
 
 template<typename dataType>
-void Tree<dataType>::addNode(const int& key, const dataType& data) {
+void Tree<dataType>::addNode(const int& key, dataType& data) {
 	this->root = addNode(this->root, key, data);
 }
 
 template<typename dataType>
-typename Tree<dataType>::node*& Tree<dataType>::addNode(node*& root, const int& key, const dataType& data) {
+typename Tree<dataType>::node*& Tree<dataType>::addNode(node*& root, const int& key, dataType& data) {
 	//Normal insertion:--------------------------- 
 	if (root == NULL)
 		return newNode(key, data);
@@ -352,6 +352,9 @@ void Tree<dataType>::delMaxKey() {
 
 template<typename dataType>
 dataType& Tree<dataType>::getWithKey(const int& key) {
+	if (!existsKey(key))
+		throw new exception("Key does not exist");
+
 	return getWithKey(this->root, key);
 }
 

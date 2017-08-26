@@ -10,9 +10,22 @@
 using namespace std;
 
 int main() {
-	Matrix test(5, 5, 0);
+	Matrix test(2147483647, 2147483647, 0);
 
-	cout << "I'm compiling!";
+	for (int i = 0; i < 1; i++)
+		for (int j = 0; j < 10000; j++)
+			test[i][j] = i + j;
+
+	for (int i = 0; i < 1; i++)
+		for (int j = 0; j < 10000; j++)
+			test[i][j] = 0;
+
+	for (int i = 0; i < 1; i++)
+		for (int j = 0; j < 10000; j++)
+			cout << test[i][j] << " ";
+
+	cout << endl << test.treeHeight();
+
 	_getch();
 
 	return 0;

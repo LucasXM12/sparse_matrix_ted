@@ -4,17 +4,20 @@
 
 //Row: ----------------------------------------------------------------------------------
 
-Matrix::Row::Row(Matrix*& father) : father(father), columns() {}
+Matrix::Row::Row() {}
 
-Matrix::Row::~Row() {
-	delete &this->columns;
-}
+Matrix::Row::Row(Matrix* const& father) : father(father), columns() {}
 
 int& Matrix::Row::operator[](const int& column) {
 	if (column < 0 || column >= this->father->width)
 		throw exception("Invalid column");
 
+	if (!this->columns.existsKey(column))
+		this->columns.addNode(column, this->father->defaultValue);
+
 	this->father->lastOperation.column = column;
+
+	this->father->lastOperation.value = this->columns[column];
 
 	return this->father->lastOperation.value;
 }
@@ -37,19 +40,18 @@ void Matrix::Row::setWithKey(const int& key, const int& value) {
 
 //Matrix: -------------------------------------------------------------------------------
 
-Matrix::Matrix(const int& width, const int& height, const int& defaultValue) : defaultValue(defaultValue) {
+Matrix::Matrix(const int& width, const int& height, const int& defaultValue) : defaultValue(defaultValue), matrix() {
 	if (width <= 0)
 		throw exception("Invalid width");
 
 	if (height <= 0)
 		throw exception("Invalid height");
 
+	this->width = width;
+	this->height = height;
+
 	this->lastOperation.row = -1;
 	this->lastOperation.column = -1;
-}
-
-Matrix::~Matrix() {
-	delete &this->matrix;
 }
 
 Matrix::Row& Matrix::operator[](const int& row) {
@@ -74,7 +76,14 @@ Matrix::Row& Matrix::operator[](const int& row) {
 	if (row < 0 || row >= this->height)
 		throw exception("Invalid row");
 
+	if (!this->matrix.existsKey(row))
+		this->matrix.addNode(row, Row(this));
+
 	this->lastOperation.row = row;
 
 	return this->matrix[row];
+}
+
+int Matrix::treeHeight() {
+	return this->matrix.rootHeight();
 }

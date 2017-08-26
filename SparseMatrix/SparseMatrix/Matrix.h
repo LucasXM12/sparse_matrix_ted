@@ -16,8 +16,8 @@ private:
 		Matrix* father;
 		Tree<int> columns;
 	public:
-		Row(Matrix*&);
-		virtual ~Row();
+		Row();
+		Row(Matrix* const&);
 
 		int& operator[](const int&);
 
@@ -37,7 +37,8 @@ private:
 	operation lastOperation;
 public:
 	Matrix(const int&, const int&, const int&);
-	virtual ~Matrix();
 
 	Row& operator[](const int&);
+
+	int treeHeight();
 };
