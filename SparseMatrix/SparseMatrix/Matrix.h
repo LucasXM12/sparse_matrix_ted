@@ -4,17 +4,21 @@
 
 class Matrix {
 private:
-	typedef struct lastOperation {
+	typedef struct operation {
 		int value;
 
 		int row;
 		int column;
-	} lastOperation;
+	} operation;
 
 	class Row {
 	private:
+		Matrix* father;
 		Tree<int> columns;
 	public:
+		Row(Matrix*&);
+		virtual ~Row();
+
 		int& operator[](const int&);
 	};
 
@@ -25,7 +29,7 @@ private:
 
 	int defaultValue;
 
-	lastOperation op;
+	operation lastOperation;
 public:
 	Matrix(const int&, const int&, const int&);
 	virtual ~Matrix();
