@@ -84,6 +84,30 @@ Matrix::Row& Matrix::operator[](const int& row) {
 	return this->matrix[row];
 }
 
+string Matrix::toString() {
+	string ret;
+
+	for (int i = 0; i < this->height; i++) {
+		ret += "[";
+
+		int j;
+		for (j = 0; j < this->width - 1; j++)
+			ret += to_string(operator[](i)[j]) + " ";
+
+		ret += to_string(operator[](i)[j]);
+
+		ret += "]\n";
+	}
+
+	return ret;
+}
+
 int Matrix::treeHeight() {
 	return this->matrix.rootHeight();
 }
+
+ostream& operator<<(ostream& os, Matrix& matrix) {
+	return os << matrix.toString();
+}
+
+

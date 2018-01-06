@@ -2,6 +2,9 @@
 
 #include "Tree.h"
 
+#include <vector>
+#include <sstream>
+
 class Matrix {
 private:
 	typedef struct operation {
@@ -38,7 +41,10 @@ private:
 public:
 	Matrix(const int&, const int&, const int&);
 
+	string toString();
+
 	Row& operator[](const int&);
+	friend ostream& operator<<(ostream&, Matrix&);
 
 	int treeHeight();
 };

@@ -10,10 +10,10 @@
 using namespace std;
 
 int main() {
-	Matrix test(2147483647, 2147483647, 0);
+	Matrix test(10000, 10000, 0);
 
-	for (int i = 0; i < 1; i++)
-		for (int j = 0; j < 10000; j++)
+	for (int i = 0; i < 5; i++)
+		for (int j = 0; j < 5; j++)
 			test[i][j] = i + j;
 
 	for (int i = 0; i < 1; i++)
@@ -24,7 +24,7 @@ int main() {
 		for (int j = 0; j < 10000; j++)
 			cout << test[i][j] << " ";
 
-	cout << endl << test.treeHeight();
+	cout << test.treeHeight();
 
 	_getch();
 
